@@ -13,12 +13,22 @@ def OpenFile():
 def About():
 	print("simple text editor")
 
-def Save():
-	print("save")
+def SaveFile():
+	if root.filename == "":
+		root.filename =  filedialog.asksaveasfilename(initialdir = "/",title = "Select file", filetypes = (("text files","*.txt"),("all files","*.*")))
+		f = open(root.filename, "w") ##opens file
+		f.write(T.get(1.0, "end")) ##write to file till EOF
+		f.close() ##closes the file
+	else:
+		f = open(root.filename, "w")
+		f.write(T.get(1.0, "end"))
+		f.close()
 
-def SaveAs():
-	root.filename =  filedialog.asksaveasfilename(initialdir = "/",title = "Select file",filetypes = (("text files","*.txt"),("all files","*.*")))
-	f = open(root.filename)
+def SaveAsFile():
+	root.filename =  filedialog.asksaveasfilename(initialdir = "/",title = "Select file", filetypes = (("text files","*.txt"),("all files","*.*")))
+	f = open(root.filename, "w")
+	f.write(T.get(1.0, "end"))
+	f.close()
 	
 
 root = tk.Tk()
@@ -30,8 +40,8 @@ filemenu = tk.Menu(menu)
 menu.add_cascade(label = "File", menu=filemenu)
 filemenu.add_command(label="New", command=NewFile)
 filemenu.add_command(label="Open..", command=OpenFile)
-filemenu.add_command(label="Save..", command=OpenFile)
-filemenu.add_command(label="Save as..", command=SaveAs)
+filemenu.add_command(label="Save..", command=SaveFile)
+filemenu.add_command(label="Save as..", command=SaveAsFile)
 filemenu.add_separator()
 filemenu.add_command(label="Exit", command=root.quit)
 
